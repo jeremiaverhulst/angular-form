@@ -1,0 +1,54 @@
+<section class="container mt-5 mb-3">
+  <h1 class="mb-5">Add a new friend:</h1>
+  <form action="" #friendListForm="ngForm" (ngSubmit)="submitForm()" novalidate>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="fName">First name:</label>
+        <input type="text" name="fName" class="form-control" id="fName" pattern="^[A-z-|\s]*$" required #fName="ngModel" [(ngModel)]="friendModel.fName" [class.invalidInput]="fName.invalid && fName.touched">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="lName">Last name:</label>
+        <input type="text" name="lName" class="form-control" id="lName" pattern="^[A-z-|\s]*$" required #lName="ngModel" [(ngModel)]="friendModel.lName" [class.invalidInput]="lName.invalid && lName.touched">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="emailAddress">E-mail:</label>
+        <input type="text" name="emailAddress" class="form-control" id="emailAddress" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required #emailAddress="ngModel" [(ngModel)]="friendModel.emailAddress" [class.invalidInput]="emailAddress.invalid && emailAddress.touched">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="phoneNumber">Phone number:</label>
+        <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$" required #phoneNumber="ngModel" [(ngModel)]="friendModel.phoneNumber" [class.invalidInput]="phoneNumber.invalid && phoneNumber.touched">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12 mb-3">
+        <label for="favLang">Favourite language:</label>
+        <select id="favLang" name="favLang" class="form-control" required [(ngModel)]="friendModel.favLang" #favLang="ngModel" [class.invalidInput]="favLang.invalid && favLang.touched">
+          <option *ngFor="let language of languages" value="{{language}}">
+            {{language}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="friendListForm.form.invalid">Add friend</button>
+  </form>
+</section>
+
+<section class="container mt-5">
+  <h2 class="mb-3">Your friendsa:</h2>
+  <div class="row justify-content-around">
+    <div class="card col-lg-5 my-4"  *ngFor="let friend of allFriends">
+      <div class="card-body">
+        <h4 class="card-title">{{friend.fName}} {{friend.lName}}</h4>
+        <h6 class="card-subtitle mb-4 text-muted">Favourite language: <span class="badge badge-info">{{friend.favLang}}</span></h6>
+        <div class="card-text">
+          <p class="my-3">Phone number: {{friend.phoneNumber}}</p>
+          <p class="my-3">Email: {{friend.emailAddress}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<router-outlet></router-outlet>
